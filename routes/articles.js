@@ -16,7 +16,8 @@ router.get(`/articles`, async (req, res) => {
 router.post("/article/create", async (req, res) => {
   console.log("Using route : /article/create");
   try {
-    const { title, quantity, price, description, picture } = req.fields;
+    const { title, quantity, price, description, picture, category } =
+      req.fields;
 
     const newArticle = new Article({
       title: title,
@@ -24,6 +25,7 @@ router.post("/article/create", async (req, res) => {
       price: price,
       description: description,
       picture: picture,
+      category: category,
     });
     newArticle.save();
     res.status(200).json({
