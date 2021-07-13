@@ -21,6 +21,8 @@ const articlesRoutes = require("./routes/articles");
 app.use(articlesRoutes);
 const categoriesRoutes = require("./routes/categories");
 app.use(categoriesRoutes);
+const usersRoutes = require("./routes/users");
+app.use(usersRoutes);
 
 app.all("*", function (req, res) {
   res.json({ message: "Page not found" });
