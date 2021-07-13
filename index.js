@@ -19,6 +19,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 const articlesRoutes = require("./routes/articles");
 app.use(articlesRoutes);
+const categoriesRoutes = require("./routes/categories");
+app.use(categoriesRoutes);
 
 app.all("*", function (req, res) {
   res.json({ message: "Page not found" });
