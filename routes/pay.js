@@ -50,15 +50,20 @@ router.post("/pay", async (req, res) => {
         orderRef,
         orderDate,
         order,
-        firstName,
-        lastName,
-        email,
-        address,
-        city,
-        postcode,
-        country,
-        state,
-        userId,
+        customer: {
+          userId,
+          firstName,
+          lastName,
+          email,
+        },
+
+        delivery: {
+          address,
+          city,
+          postcode,
+          country,
+          state,
+        },
       });
       newOrder.save();
     }
