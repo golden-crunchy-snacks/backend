@@ -93,7 +93,7 @@ router.get("/user/account", isAuthenticated, async (req, res) => {
     const user = await User.findById(req.user._id, "email account");
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: "Erreur inconnue" });
+    res.status(400).json({ error: "Unknown Error" });
   }
 });
 
