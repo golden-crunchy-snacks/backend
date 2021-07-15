@@ -1,9 +1,26 @@
 const express = require("express");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const router = express.Router();
+const Order = require("../models/Order");
 
 router.post("/pay", async (req, res) => {
-  const { amount, description } = req.fields;
+  const {
+    amount,
+    description,
+    orderRef,
+    orderDate,
+    order,
+    firstName,
+    lastName,
+    email,
+    address,
+    city,
+    postcode,
+    country,
+    state,
+    userId,
+  } = req.fields;
+
   // Réception du token créer via l'API Stripe depuis le Frontend
   const stripeToken = req.fields.stripeToken;
   // Créer la transaction
@@ -16,8 +33,24 @@ router.post("/pay", async (req, res) => {
   });
   console.log(response.status);
 
-  // TODO
-  // Sauvegarder la transaction dans une BDD MongoDB
+  if (response) {
+    const newOrder = new Order({
+      amount,
+      orderRef,
+      orderDate,
+      order,
+      firstName,
+      lastName,
+      email,
+      address,
+      city,
+      postcode,
+      country,
+      state,
+      userId,
+    });
+    newOrder.save();
+  }
 
   res.json(response);
 });
