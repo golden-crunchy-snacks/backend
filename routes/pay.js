@@ -31,38 +31,37 @@ router.post("/pay", async (req, res) => {
     return res.status(400).json({
       error: languages.en.invalidEmail,
     });
-  } else {
-    const stripeToken = req.fields.stripeToken;
-
-    const response = await stripe.charges.create({
-      amount: amount,
-      currency: "gbp",
-      description: description,
-      source: stripeToken,
-    });
-    console.log(response.status);
-
-    if (response) {
-      const newOrder = new Order({
-        amount,
-        orderRef,
-        orderDate,
-        order,
-        firstName,
-        lastName,
-        email,
-        address,
-        city,
-        postcode,
-        country,
-        state,
-        userId,
-      });
-      newOrder.save();
-    }
-
-    res.json(response);
   }
+  const stripeToken = req.fields.stripeToken;
+
+  const response = await stripe.charges.create({
+    amount: amount,
+    currency: "gbp",
+    description: description,
+    source: stripeToken,
+  });
+  console.log(response.status);
+
+  if (response) {
+    const newOrder = new Order({
+      amount,
+      orderRef,
+      orderDate,
+      order,
+      firstName,
+      lastName,
+      email,
+      address,
+      city,
+      postcode,
+      country,
+      state,
+      userId,
+    });
+    newOrder.save();
+  }
+
+  res.json(response);
 });
 
 module.exports = router;
