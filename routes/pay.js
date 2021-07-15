@@ -28,11 +28,9 @@ router.post("/pay", async (req, res) => {
   } = req.fields;
 
   if (!isValidMail(email)) {
-    {
-      return res.status(400).json({
-        error: languages.en.invalidEmail,
-      });
-    }
+    return res.status(400).json({
+      error: languages.en.invalidEmail,
+    });
   } else {
     const stripeToken = req.fields.stripeToken;
 
