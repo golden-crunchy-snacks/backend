@@ -33,36 +33,42 @@ router.post("/pay", async (req, res) => {
       error: languages.en.invalidEmail,
     });
   }
-  const stripeToken = req.fields.stripeToken;
 
-  const response = await stripe.charges.create({
-    amount: amount,
-    currency: "gbp",
-    description: description,
-    source: stripeToken,
-  });
-  console.log(response.status);
-
-  if (response) {
-    const newOrder = new Order({
-      amount,
-      orderRef,
-      orderDate,
-      order,
-      firstName,
-      lastName,
-      email,
-      address,
-      city,
-      postcode,
-      country,
-      state,
-      userId,
+  try {
+    const stripeToken = req.fields.stripeToken;
+    const response = await stripe.charges.create({
+      amount: amount,
+      currency: "gbp",
+      description: description,
+      source: stripeToken,
     });
-    newOrder.save();
-  }
+    console.log(response.status);
 
-  res.json(response);
+    if (response) {
+      const newOrder = new Order({
+        amount,
+        orderRef,
+        orderDate,
+        order,
+        firstName,
+        lastName,
+        email,
+        address,
+        city,
+        postcode,
+        country,
+        state,
+        userId,
+      });
+      newOrder.save();
+    }
+
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
 });
 
 module.exports = router;

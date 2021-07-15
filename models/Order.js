@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Order = mongoose.model("Order", {
   orderRef: String,
   orderDate: String,
-  amount: String,
+  amount: Number,
   order: Array,
   customer: {
     userId: String,
