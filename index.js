@@ -30,6 +30,8 @@ const usersRoutes = require("./routes/users");
 app.use(usersRoutes);
 const payRoutes = require("./routes/pay");
 app.use(payRoutes);
+const ordersRoutes = require("./routes/orders");
+app.use(ordersRoutes);
 
 app.all("*", function (req, res) {
   res.json({ message: "Page not found" });
