@@ -2,6 +2,7 @@ const express = require("express");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const router = express.Router();
 const Order = require("../models/Order");
+const languages = require("../lang/errorMessages.json");
 
 const isValidMail = (mail) => {
   const mailformat =
