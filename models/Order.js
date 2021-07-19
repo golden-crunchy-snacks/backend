@@ -1,8 +1,9 @@
-// Model for User
+// Model for Order
 
 const mongoose = require("mongoose");
 
 const Order = mongoose.model("Order", {
+  deliveryStatus: String,
   orderRef: String,
   orderDate: String,
   amount: Number,

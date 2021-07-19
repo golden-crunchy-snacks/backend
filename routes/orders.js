@@ -35,4 +35,16 @@ router.get(`/orders/:user`, async (req, res) => {
   }
 });
 
+router.put(`/orders/status`, async (req, res) => {
+  console.log("Using Route : /orders");
+  console.log(req.query);
+  try {
+    const order = await Order.findById(req.query.id);
+    order.deliveryStatus = req.query.deliveryStatus;
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = router;

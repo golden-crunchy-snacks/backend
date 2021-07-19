@@ -46,6 +46,7 @@ router.post("/pay", async (req, res) => {
 
     if (response) {
       const newOrder = new Order({
+        deliveryStatus: "pending",
         amount: (amount / 100).toFixed(2),
         orderRef,
         orderDate,
