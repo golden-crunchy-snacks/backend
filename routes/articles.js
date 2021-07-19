@@ -13,6 +13,17 @@ router.get(`/articles`, async (req, res) => {
   }
 });
 
+router.get(`/article/:id`, async (req, res) => {
+  console.log("Using Route : /article/:id");
+  console.log(req.params.id);
+  try {
+    const article = await Article.findById(req.params.id);
+    res.status(200).json(article);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 router.post("/article/create", async (req, res) => {
   console.log("Using route : /article/create");
   try {
@@ -31,6 +42,76 @@ router.post("/article/create", async (req, res) => {
     res.status(200).json({
       _id: newArticle._id,
     });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.put("/article/pay", async (req, res) => {
+  console.log("route : /article/pay");
+  console.log(req.fields);
+  try {
+    if (req.fields.id && req.fields.quantity) {
+      const article = await Article.findById(req.fields.id);
+      if (article.quantity >= req.fields.quantity) {
+        article.quantity = article.quantity - req.fields.quantity;
+        await article.save();
+        res.json(article);
+      } else {
+        res.status(400).json({
+          message:
+            "The quantity that you've selected surpasses the stock capacity",
+        });
+      }
+    } else {
+      res.status(400).json({ message: "Missing parameter" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.put("/article/update", async (req, res) => {
+  console.log("route : /article/update");
+  console.log(req.fields);
+  const { id, title, quantity, price, description, picture, category } =
+    req.fields;
+  try {
+    if (
+      id &&
+      title &&
+      quantity &&
+      price &&
+      description &&
+      picture &&
+      category
+    ) {
+      const article = await Article.findById(id);
+      article.title = title;
+      article.quantity = quantity;
+      article.price = price;
+      article.description = description;
+      article.category = category;
+      article.picture = picture;
+      await article.save();
+      res.json(article);
+    } else {
+      res.status(400).json({ message: "Missing parameter" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.delete("/article/delete", async (req, res) => {
+  try {
+    if (req.fields.id) {
+      await Article.findByIdAndDelete(req.fields.id);
+
+      res.json({ message: "Article removed" });
+    } else {
+      res.status(400).json({ message: "Missing id" });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

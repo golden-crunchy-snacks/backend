@@ -15,7 +15,7 @@ const isValidMail = (mail) => {
 };
 
 router.post("/users/signup", formidable(), async (req, res) => {
-  const { email, password } = req.fields;
+  const { email, password, type } = req.fields;
   if (!email || !password) {
     return res.status(400).json({
       error: languages.en.incomplete,
@@ -39,6 +39,7 @@ router.post("/users/signup", formidable(), async (req, res) => {
 
   try {
     const newUser = await new User({
+      type,
       email,
       token,
       hash,

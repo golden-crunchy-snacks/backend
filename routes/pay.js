@@ -56,7 +56,6 @@ router.post("/pay", async (req, res) => {
           lastName,
           email,
         },
-
         delivery: {
           address,
           city,
