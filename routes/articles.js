@@ -34,10 +34,9 @@ router.get(`/article/:id`, async (req, res) => {
 router.post("/article/create", async (req, res) => {
   console.log("Using route : /article/create");
   try {
-    const { title, quantity, price, description, picture, category } =
-      req.fields;
+    const { title, quantity, price, description, category } = req.fields;
 
-    const result = await cloudinary.uploader.upload(picture, {
+    const result = await cloudinary.uploader.upload(req.files.picture.path, {
       folder: "/golden-crunchy-snacks",
     });
 
