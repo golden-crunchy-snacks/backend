@@ -41,6 +41,7 @@ router.put(`/orders/status`, async (req, res) => {
   try {
     const order = await Order.findById(req.fields.id);
     order.deliveryStatus = req.fields.deliveryStatus;
+    await order.save();
     res.status(200).json(order);
   } catch (error) {
     res.status(400).json({ error: error.message });
