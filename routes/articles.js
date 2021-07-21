@@ -66,21 +66,11 @@ router.put("/article/pay", async (req, res) => {
   console.log("route : /article/pay");
   console.log(req.fields);
   try {
-    if (req.fields.id && req.fields.quantity) {
-      const article = await Article.findById(req.fields.id);
-      if (article.quantity >= req.fields.quantity) {
-        article.quantity = article.quantity - req.fields.quantity;
-        await article.save();
-        res.json(article);
-      } else {
-        res.status(400).json({
-          message:
-            "The quantity that you've selected surpasses the stock capacity",
-        });
-      }
-    } else {
-      res.status(400).json({ message: "Missing parameter" });
-    }
+    const article = await Article.findById(req.fields.id);
+
+    article.quantity = article.quantity - req.fields.quantity;
+    await article.save();
+    res.json(article);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
