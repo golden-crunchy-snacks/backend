@@ -125,12 +125,12 @@ router.put("/article/update", async (req, res) => {
   }
 });
 
-router.delete("/article/delete", async (req, res) => {
-  console.log("route : /article/update");
-  console.log(req.fields.id);
+router.delete("/article/delete/:id", async (req, res) => {
+  console.log("route : /article/delete");
+  console.log(req.params);
   try {
-    if (req.fields.id) {
-      await Article.findByIdAndDelete(req.fields.id);
+    if (req.params.id) {
+      await Article.findByIdAndDelete(req.params.id);
 
       res.json({ message: "Article removed" });
     } else {
