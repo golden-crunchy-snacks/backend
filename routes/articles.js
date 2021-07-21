@@ -115,6 +115,7 @@ router.put("/article/update", async (req, res) => {
       res.status(400).json({ message: "Missing parameter" });
     }
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 });
