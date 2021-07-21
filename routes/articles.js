@@ -36,7 +36,7 @@ router.post("/article/create", async (req, res) => {
   try {
     const { title, quantity, price, description, category } = req.fields;
 
-    const result = await cloudinary.uploader.upload(req.files.picture.path, {
+    const result = await cloudinary.uploader.upload(req.files.picture, {
       folder: "/golden-crunchy-snacks",
     });
 
@@ -83,8 +83,7 @@ router.put("/article/pay", async (req, res) => {
 
 router.put("/article/update", async (req, res) => {
   console.log("route : /article/update");
-  console.log(req.fields);
-  console.log(req.files.picture.path);
+
   const { id, title, quantity, price, description, category } = req.fields;
   try {
     if (id && title && quantity && price && description && category) {
