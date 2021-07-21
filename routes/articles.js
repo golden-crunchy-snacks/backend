@@ -34,25 +34,29 @@ router.get(`/article/:id`, async (req, res) => {
 router.post("/article/create", async (req, res) => {
   console.log("Using route : /article/create");
   try {
-    const { picture } = req.files.picture.path;
+    const picture = req.files.picture.path;
     const { title, quantity, price, description, category } = req.fields;
 
-    const result = await cloudinary.uploader.upload(picture, {
-      folder: "/golden-crunchy-snacks",
-    });
+    if (title && quantity && price && description && category && picture) {
+      const result = await cloudinary.uploader.upload(picture, {
+        folder: "/golden-crunchy-snacks",
+      });
 
-    const newArticle = new Article({
-      title: title,
-      quantity: quantity,
-      price: price,
-      description: description,
-      picture: result.url,
-      category: category,
-    });
-    newArticle.save();
-    res.status(200).json({
-      _id: newArticle._id,
-    });
+      const newArticle = new Article({
+        title: title,
+        quantity: quantity,
+        price: price,
+        description: description,
+        picture: result.url,
+        category: category,
+      });
+      newArticle.save();
+      res.status(200).json({
+        _id: newArticle._id,
+      });
+    } else {
+      res.status(400).json({ message: "Missing parameter" });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
