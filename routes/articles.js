@@ -87,7 +87,7 @@ router.put("/article/update", async (req, res) => {
 
   const { id, title, quantity, price, description, category } = req.fields;
   const { picture } = req.files.picture.path;
-  console.log(req);
+
   try {
     if (
       id &&
@@ -117,7 +117,7 @@ router.put("/article/update", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error);
   }
 });
 
