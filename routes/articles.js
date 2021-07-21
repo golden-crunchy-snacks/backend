@@ -45,7 +45,7 @@ router.post("/article/create", async (req, res) => {
       quantity: quantity,
       price: price,
       description: description,
-      picture: result,
+      picture: result.url,
       category: category,
     });
     newArticle.save();
