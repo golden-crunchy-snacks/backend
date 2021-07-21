@@ -86,6 +86,7 @@ router.put("/article/update", async (req, res) => {
 
   const { id, title, quantity, price, description, category, picture } =
     req.fields;
+  console.log(id, title, quantity, price, description, category, picture);
   try {
     if (
       id &&
