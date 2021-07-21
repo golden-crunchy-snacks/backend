@@ -126,6 +126,8 @@ router.put("/article/update", async (req, res) => {
 });
 
 router.delete("/article/delete", async (req, res) => {
+  console.log("route : /article/update");
+  console.log(req.fields.id);
   try {
     if (req.fields.id) {
       await Article.findByIdAndDelete(req.fields.id);
