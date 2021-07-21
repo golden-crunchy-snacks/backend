@@ -85,8 +85,7 @@ router.put("/article/pay", async (req, res) => {
 router.put("/article/update", async (req, res) => {
   console.log("route : /article/update");
 
-  const { id, title, quantity, price, description, category, picture } =
-    req.fields;
+  const { id, title, quantity, price, description, category } = req.fields;
   const { picture } = req.files.picture.path;
   console.log(req);
   try {
