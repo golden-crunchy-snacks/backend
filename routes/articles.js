@@ -83,7 +83,7 @@ router.put("/article/pay", async (req, res) => {
 
 router.put("/article/update", async (req, res) => {
   console.log("route : /article/update");
-
+  console.log(req.files.picture);
   const { id, title, quantity, price, description, category } = req.fields;
   try {
     if (id && title && quantity && price && description && category) {
