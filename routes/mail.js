@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const languages = require("../lang/errorMessages.json");
 
 const API_KEY = process.env.MAILGUN_API_KEY;
 const DOMAIN = process.env.MAILGUN_DOMAIN;
@@ -65,8 +66,12 @@ router.post(`/mail/contact`, async (req, res) => {
       text: text,
     };
     await mailgun.messages().send(data, (error, body) => {
-      res.status(200).json("Email sent!");
-      console.log(body);
+      if (body) {
+        res.status(200).json("Email sent!");
+        console.log(body);
+      } else {
+        res.status(400).json({ error: error.message });
+      }
     });
     res.json;
   } catch (error) {
