@@ -51,11 +51,11 @@ router.post(`/mail/contact`, async (req, res) => {
   console.log(text);
 
   if (
-    from === "" ||
-    subject === "" ||
-    firstName === "" ||
-    lastName === "" ||
-    text === ""
+    from === undefined ||
+    subject === undefined ||
+    firstName === undefined ||
+    lastName === undefined ||
+    text === undefined
   ) {
     return res.status(400).json({
       error: languages.en.missingData,
