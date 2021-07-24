@@ -51,14 +51,18 @@ router.post(`/mail/contact`, async (req, res) => {
   console.log(text);
 
   if (
-    from === undefined ||
-    subject === undefined ||
-    firstName === undefined ||
-    lastName === undefined ||
-    text === undefined
+    from === "" ||
+    subject === "" ||
+    firstName === "" ||
+    lastName === "" ||
+    text === ""
   ) {
     return res.status(400).json({
       error: languages.en.missingData,
+    });
+  } else if (!isValidMail(from)) {
+    return res.status(400).json({
+      error: languages.en.invalidEmail,
     });
   } else {
     try {
