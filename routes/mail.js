@@ -69,7 +69,7 @@ router.post(`/mail/contact`, async (req, res) => {
       const data = {
         from: `${firstName} ${lastName} <${from}>`,
         to: "Golden Crunchy Snacks <goldencrunchysnacks.hf@gmail.com>",
-        subject: `${orderRef} : ${subject}`,
+        subject: `${orderRef}  ${subject}`,
         text: text,
       };
       await mailgun.messages().send(data, (error, body) => {
