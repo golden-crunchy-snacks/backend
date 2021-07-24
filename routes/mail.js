@@ -46,6 +46,9 @@ router.post(`/mail/contact`, async (req, res) => {
   };
   console.log("Using Route : /mail/contact");
   const { from, subject, orderRef, firstName, lastName, text } = req.fields;
+  console.log(from);
+  console.log(subject);
+  console.log(text);
 
   if (
     from === "" ||
