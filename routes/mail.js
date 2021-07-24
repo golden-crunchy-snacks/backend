@@ -72,7 +72,7 @@ router.post(`/mail/contact`, async (req, res) => {
       text: text,
     };
     await mailgun.messages().send(data, (error, body) => {
-      if (body) {
+      if (body.message === "Queued. Thank you.") {
         res.status(200).json("Email sent!");
         console.log(body);
       } else {
