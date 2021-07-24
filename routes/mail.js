@@ -47,7 +47,13 @@ router.post(`/mail/contact`, async (req, res) => {
   console.log("Using Route : /mail/contact");
   const { from, subject, orderRef, firstName, lastName, text } = req.fields;
 
-  if (!from || !subject || !firstName || !lastName || !text) {
+  if (
+    from === "" ||
+    subject === "" ||
+    firstName === "" ||
+    lastName === "" ||
+    text === ""
+  ) {
     return res.status(400).json({
       error: languages.en.missingData,
     });
