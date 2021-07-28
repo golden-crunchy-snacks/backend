@@ -80,7 +80,7 @@ router.put("/article/update", async (req, res) => {
   console.log("route : /article/update");
 
   const { id, title, quantity, price, description, category } = req.fields;
-  const picture = req.files.picture.path;
+  const picture = req.files.picture.path ? req.files.picture.path : req.fields;
 
   try {
     if (
