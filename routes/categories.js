@@ -30,4 +30,20 @@ router.post("/category/create", async (req, res) => {
   }
 });
 
+router.delete("/category/delete/:id", async (req, res) => {
+  console.log("route : /category/delete");
+  console.log(req.params);
+  try {
+    if (req.params.id) {
+      await Category.findByIdAndDelete(req.params.id);
+
+      res.json({ message: "Category removed" });
+    } else {
+      res.status(400).json({ message: "Missing id" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = router;
