@@ -35,7 +35,8 @@ router.post("/article/create", async (req, res) => {
   console.log("Using route : /article/create");
   try {
     const picture = req.files.picture.path;
-    const { title, quantity, price, description, category } = req.fields;
+    const { title, quantity, price, description, category, subCategory } =
+      req.fields;
 
     if (title && quantity && price && description && category && picture) {
       const result = await cloudinary.uploader.upload(picture, {
@@ -49,6 +50,7 @@ router.post("/article/create", async (req, res) => {
         description: description,
         picture: result.url,
         category: category,
+        subCategory: subCategory ? subCategory : "",
       });
       newArticle.save();
       res.status(200).json({
@@ -78,10 +80,14 @@ router.put("/article/pay", async (req, res) => {
 
 router.put("/article/update", async (req, res) => {
   console.log("route : /article/update");
+  const urlCheck = /^((http|https|ftp):\/\/)/;
 
-  const { id, title, quantity, price, description, category } = req.fields;
-  const picture = req.files.picture.path ? req.files.picture.path : req.fields;
-
+  const { id, title, quantity, price, description, category, subCategory } =
+    req.fields;
+  const picture =
+    req.files.picture === undefined
+      ? req.fields.picture
+      : req.files.picture.path;
   try {
     if (
       id &&
@@ -92,20 +98,34 @@ router.put("/article/update", async (req, res) => {
       category &&
       picture
     ) {
-      const result = await cloudinary.uploader.upload(picture, {
-        folder: "/golden-crunchy-snacks",
-      });
-      console.log(result);
-
-      const article = await Article.findById(id);
-      article.title = title;
-      article.quantity = quantity;
-      article.price = price;
-      article.description = description;
-      article.category = category;
-      article.picture = result.url;
-      await article.save();
-      res.json(article);
+      if (!urlCheck.test(picture)) {
+        const result = await cloudinary.uploader.upload(picture, {
+          folder: "/golden-crunchy-snacks",
+        });
+        const article = await Article.findById(id);
+        article.title = title;
+        article.quantity = quantity;
+        article.price = price;
+        article.description = description;
+        article.category = category;
+        article.picture = result.url;
+        article.subCategory = subCategory ? subCategory : "";
+        await article.save();
+        res.json(article);
+        console.log("file");
+      } else {
+        const article = await Article.findById(id);
+        article.title = title;
+        article.quantity = quantity;
+        article.price = price;
+        article.description = description;
+        article.category = category;
+        article.picture = picture;
+        article.subCategory = subCategory ? subCategory : "";
+        await article.save();
+        res.json(article);
+        console.log("http");
+      }
     } else {
       res.status(400).json({ message: "Missing parameter" });
     }
