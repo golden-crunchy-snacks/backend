@@ -36,6 +36,8 @@ const ordersRoutes = require("./routes/orders");
 app.use(ordersRoutes);
 const mailRoutes = require("./routes/mail");
 app.use(mailRoutes);
+const subCategoriesRoutes = require("./routes/subCategories");
+app.use(subCategoriesRoutes);
 
 app.all("*", function (req, res) {
   res.json({ message: "Page not found" });
