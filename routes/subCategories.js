@@ -13,21 +13,6 @@ router.get(`/subcategories`, async (req, res) => {
   }
 });
 
-router.post(`/subcategory/:title`, async (req, res) => {
-  console.log("Using Route : /subcategory/:title");
-  console.log(req.params.title);
-  try {
-    const subCategories = await SubCategory.find();
-    for (i = 0; i < subCategories.length; i++) {
-      if (subCategories[i].title === req.params.title) {
-        res.status(200).json(subCategories[i]._id);
-      }
-    }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
 router.post(`/subcategories/:id`, async (req, res) => {
   console.log("Using Route : /subcategories/:id");
   console.log(req.params.id);

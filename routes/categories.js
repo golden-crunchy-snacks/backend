@@ -30,21 +30,6 @@ router.post("/category/create", async (req, res) => {
   }
 });
 
-router.post(`/category/:title`, async (req, res) => {
-  console.log("Using Route : /category/:title");
-  console.log(req.params.title);
-  try {
-    const Categories = await Category.find();
-    for (i = 0; i < Categories.length; i++) {
-      if (Categories[i].title === req.params.title) {
-        res.status(200).json(Categories[i]._id);
-      }
-    }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
 router.delete("/category/delete/:id", async (req, res) => {
   console.log("route : /category/delete");
   console.log(req.params);
