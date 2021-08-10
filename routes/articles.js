@@ -35,16 +35,8 @@ router.post("/article/create", async (req, res) => {
   console.log("Using route : /article/create");
   try {
     const picture = req.files.picture.path;
-    const {
-      title,
-      quantity,
-      price,
-      description,
-      category,
-      subCategory,
-      categoryId,
-      subCategoryId,
-    } = req.fields;
+    const { title, quantity, price, description, category, subCategory } =
+      req.fields;
 
     if (title && quantity && price && description && category && picture) {
       const result = await cloudinary.uploader.upload(picture, {
@@ -58,9 +50,8 @@ router.post("/article/create", async (req, res) => {
         description: description,
         picture: result.url,
         category: category,
-        categoryId: categoryId,
+
         subCategory: subCategory,
-        subCategoryId: subCategoryId,
       });
       newArticle.save();
       res.status(200).json({
@@ -92,17 +83,8 @@ router.put("/article/update", async (req, res) => {
   console.log("route : /article/update");
   const urlCheck = /^((http|https|ftp):\/\/)/;
 
-  const {
-    id,
-    title,
-    quantity,
-    price,
-    description,
-    category,
-    subCategory,
-    categoryId,
-    subCategoryId,
-  } = req.fields;
+  const { id, title, quantity, price, description, category, subCategory } =
+    req.fields;
   const picture =
     req.files.picture === undefined
       ? req.fields.picture
@@ -129,8 +111,7 @@ router.put("/article/update", async (req, res) => {
         article.category = category;
         article.picture = result.url;
         article.subCategory = subCategory;
-        article.categoryId = categoryId;
-        article.subCategoryId = subCategoryId;
+
         await article.save();
         res.json(article);
         console.log("file");
@@ -142,7 +123,7 @@ router.put("/article/update", async (req, res) => {
         article.description = description;
         article.category = category;
         article.picture = picture;
-        article.subCategory = subCategory ? subCategory : "";
+        article.subCategory = subCategory;
         await article.save();
         res.json(article);
         console.log("http");
