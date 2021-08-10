@@ -34,11 +34,12 @@ router.post(`/subcategories/:id`, async (req, res) => {
 router.post("/subcategory/create", async (req, res) => {
   console.log("Using route : /subcategory/create");
   try {
-    const { title, categoryId } = req.fields;
+    const { title, categoryId, category } = req.fields;
 
     const newSubCategory = new SubCategory({
       title: title,
       categoryId: categoryId,
+      category: category,
     });
     newSubCategory.save();
     res.status(200).json({
