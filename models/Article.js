@@ -8,8 +8,10 @@ const Article = mongoose.model("Article", {
   price: Number,
   description: String,
   category: String,
+  categoryId: String,
   picture: String,
   subCategory: String,
+  subCategoryId: String,
 });
 
 module.exports = Article;
