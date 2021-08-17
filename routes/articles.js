@@ -14,7 +14,13 @@ router.get(`/articles`, async (req, res) => {
   console.log(req.query);
   try {
     const articles = await Article.find();
-    res.status(200).json(articles);
+    let sortedArticles = [];
+    for (let i = 0; i < articles.length; i++) {
+      sortedArticles = articles.sort((a, b) =>
+        a.category.toLowerCase().localeCompare(b.category.toLowerCase())
+      );
+    }
+    res.status(200).json(sortedArticles);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
