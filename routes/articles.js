@@ -277,7 +277,14 @@ router.post("/article/create", async (req, res) => {
       wholeSalePrice,
     } = req.fields;
 
-    if (title && quantity && price && description && category) {
+    if (
+      title &&
+      quantity &&
+      price &&
+      description &&
+      category &&
+      wholeSalePrice
+    ) {
       if (req.fields.picture1) {
         picture1 = req.fields.picture1;
       }
