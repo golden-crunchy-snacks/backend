@@ -50,6 +50,7 @@ router.post("/users/signup", formidable(), async (req, res) => {
     res.status(200).json({
       id: newUser._id,
       token: newUser.token,
+      type: newUser.type,
     });
   } catch (error) {
     res.json({ error: error.message });
@@ -81,6 +82,7 @@ router.post("/users/login", formidable(), async (req, res) => {
     return res.status(200).json({
       _id: user._id,
       token: user.token,
+      type: user.type,
     });
   } else {
     return res.status(401).json({
