@@ -6,6 +6,7 @@ const Article = mongoose.model("Article", {
   title: String,
   quantity: Number,
   price: Number,
+  wholeSalePrice: Number,
   description: String,
   category: String,
 

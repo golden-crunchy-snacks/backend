@@ -13,8 +13,8 @@ router.get(`/articles`, async (req, res) => {
   console.log("Using Route : /articles");
   console.log(req.query);
   try {
-    const articles = await Article.find();
-    let sortedArticles = [];
+    const articles = await Article.find().sort({ title: "asc" });
+
     for (let i = 0; i < articles.length; i++) {
       sortedArticles = articles.sort((a, b) =>
         a.category.toLowerCase().localeCompare(b.category.toLowerCase())
@@ -22,6 +22,7 @@ router.get(`/articles`, async (req, res) => {
     }
     res.status(200).json(sortedArticles);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 });
@@ -167,8 +168,16 @@ router.put("/article/update", async (req, res) => {
   let newPicture3 = "";
   let newPicture4 = "";
 
-  const { id, title, quantity, price, description, category, subCategory } =
-    req.fields;
+  const {
+    id,
+    title,
+    quantity,
+    price,
+    description,
+    category,
+    subCategory,
+    wholeSalePrice,
+  } = req.fields;
   console.log(req.fields);
 
   const picture1 = req.files.picture1
@@ -236,6 +245,7 @@ router.put("/article/update", async (req, res) => {
     article.description = description;
     article.category = category;
     article.subCategory = subCategory;
+    article.wholeSalePrice = wholeSalePrice;
     article.pictures.picture1 = newPicture1;
     article.pictures.picture2 = newPicture2;
     article.pictures.picture3 = newPicture3;
@@ -257,8 +267,15 @@ router.post("/article/create", async (req, res) => {
   let picture4 = "";
 
   try {
-    const { title, quantity, price, description, category, subCategory } =
-      req.fields;
+    const {
+      title,
+      quantity,
+      price,
+      description,
+      category,
+      subCategory,
+      wholeSalePrice,
+    } = req.fields;
 
     if (title && quantity && price && description && category) {
       if (req.fields.picture1) {
@@ -308,6 +325,7 @@ router.post("/article/create", async (req, res) => {
         quantity: quantity,
         price: price,
         description: description,
+        wholeSalePrice: wholeSalePrice,
         pictures: {
           picture1: picture1,
           picture2: picture2,
